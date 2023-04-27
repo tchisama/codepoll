@@ -7,25 +7,23 @@ export const PostContext = createContext(null)
 
 export const PostsProvider= ({children})=>{
     const [posts,setPosts]=useState([])
-    const [updatePosts,setUpdatePosts]=useState(0)
+    const [upPosts,setUpPosts]=useState(0)
     const value ={
         posts,
         setPosts,
-        updatePosts,
-        setUpdatePosts
+        upPosts,
+        setUpPosts
     }
+
   useEffect(()=>{
-    const getData = getDocs(postColRef)
+    getDocs(postColRef)
       .then(snapshot=>{
         let newPosts = [];
         snapshot.docs.forEach(doc=>newPosts.push({...doc.data(),id:doc.id}));
         setPosts(newPosts)
       })
       .catch(err=>console.log(err));
-      return()=>{
-        getData();
-      }
-  },[])
+  },[upPosts])
 
     return (
         <PostContext.Provider value={{...value}}>

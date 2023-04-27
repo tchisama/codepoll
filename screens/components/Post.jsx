@@ -5,13 +5,36 @@ import {
   ImageComponent,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { colors } from "../../public/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { doc, updateDoc } from "firebase/firestore";
+import { UserContext } from "../../context/userContext";
+import { db } from "../../firebase";
 
 const Post = ({ post }) => {
   const [optionSelected, setOptionSelected] = useState(null);
   const [show, setshow] = useState(false);
+  const {user}= useContext(UserContext)
+
+
+  const confirm = ()=>{
+    setshow(true);
+    let win = optionSelected == post.correctAnswer[0]
+    const docRef = doc(db , "users",user.id)
+    const updateDocfn = updateDoc(docRef,{
+      win:win?user.win+1:user.win,
+      play:user.play+1
+    })
+    return()=>{
+      updateDocfn();
+    }
+  }
+
+
+
+
+
   const check = (option) => {
     if (!show) {
       setOptionSelected(option);
@@ -89,7 +112,7 @@ const Post = ({ post }) => {
         optionSelected && !show &&
 
         <View className="px-1 py-2 flex-row justify-end">
-          <TouchableOpacity onPress={()=>setshow(true)} style={{backgroundColor:colors.button,borderColor:colors.buttonBorder}} className="border p-2 px-4 rounded-full ">
+          <TouchableOpacity onPress={confirm} style={{backgroundColor:colors.button,borderColor:colors.buttonBorder}} className="border p-2 px-4 rounded-full ">
             <Text className="text-white">confirm</Text>
           </TouchableOpacity>
         </View>

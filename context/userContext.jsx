@@ -17,7 +17,7 @@ export const UserProvider= ({children})=>{
   useEffect(()=>{
     const q = query (UserColRef,where("userId","==","0"))
     const getData = onSnapshot(q,(snapshot)=>{
-        setUser(snapshot.docs[0].data())
+        setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
     })
       return()=>{
         getData();

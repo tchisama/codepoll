@@ -29,8 +29,8 @@ const Profile = ({navigation}) => {
         </View>
             <View style={{backgroundColor:colors.background,borderColor:colors.buttonBorder}} className="border m-4 rounded-xl justify-between items-center h-14 flex-row overflow-hidden relative">
                 <View style={{width:(((user?.win*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
-                <Text className="text-white text-4xl px-4  pt-1 ">{user?.play}</Text>
-                <Text className="text-white text-xl px-4  pt-1 ">{(user?.win*100)/user?.play} %</Text>
+                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win}</Text>
+                <Text className="text-white text-lg px-4  pt-1 ">{user?.play} plays</Text>
             </View>
     </SafeAreaView>
   )
