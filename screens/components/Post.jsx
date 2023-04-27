@@ -36,10 +36,10 @@ const Post = () => {
         </TouchableOpacity>
       </View>
       <Text className="px-1 pt-4 " style={{color:colors.white}} >
-            what is the result of this code ? ~{"\n"} 
-            var a = “hello” ;~{"\n"}
-            var b = a + “ world” ;~{"\n"}
-            console.log(b)~{"\n"}
+            what is the result of this code ? {"\n"} 
+            var a = “hello” ;{"\n"}
+            var b = a + “ world” ;{"\n"}
+            console.log(b){"\n"}
       </Text>
       <View className="px-1">
         <TouchableOpacity className="p-3 rounded-md mb-1" style={{backgroundColor:colors.gray,color:colors.white}}>

@@ -8,7 +8,7 @@ import Post from "./components/Post";
 
 const Home = () => {
   return (
-    <SafeAreaView className={`flex-1 w-full`}>
+    <SafeAreaView className={`flex-1 w-full `}>
       <NavbarHome />
       <TouchableOpacity style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
         <Ionicons name="add" size={30} color={"#fff"} />

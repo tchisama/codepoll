@@ -4,7 +4,7 @@ export const colors ={
     button:"#071730",
     buttonBorder:"#0C2346",
     border:"#14182F",
-    primary: "#0E9CFF",
+    primary: "#2F84BF",
     secondary: "#0E9CFF",
     white:"#9EABCC",
     whiteDark:"#242934",
