@@ -19,7 +19,6 @@ export const PostsProvider= ({children})=>{
       .then(snapshot=>{
         let newPosts = [];
         snapshot.docs.forEach(doc=>newPosts.push({...doc.data(),id:doc.id}));
-        console.log(newPosts)
         setPosts(newPosts)
       })
       .catch(err=>console.log(err));

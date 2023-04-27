@@ -10,11 +10,12 @@ import { colors } from "../../public/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Post = ({ post }) => {
-  const [optionSelected, setOptionSelected] = useState(0);
+  const [optionSelected, setOptionSelected] = useState(null);
   const [show, setshow] = useState(false);
   const check = (option) => {
-    setOptionSelected(option);
-    setshow(true);
+    if (!show) {
+      setOptionSelected(option);
+    }
   };
   const optionLogic = (option) => {
     if (show) {
@@ -25,7 +26,9 @@ const Post = ({ post }) => {
       } else {
         return colors.gray;
       }
-    } else {
+    } else if (optionSelected==option) {
+      return "#fff1" 
+    }{
       return colors.gray;
     }
   };
@@ -72,10 +75,9 @@ const Post = ({ post }) => {
             <TouchableOpacity
               onPress={() => check(option)}
               key={key}
-              className="p-3 rounded-md mb-1"
+              className="p-3 text-white rounded-md mb-1"
               style={{
                 backgroundColor: optionLogic(option),
-                color: colors.white,
               }}
             >
               <Text style={{ color: colors.white }}>{option}</Text>
@@ -83,6 +85,16 @@ const Post = ({ post }) => {
           );
         })}
       </View>
+      {
+        optionSelected && !show &&
+
+        <View className="px-1 py-2 flex-row justify-end">
+          <TouchableOpacity onPress={()=>setshow(true)} style={{backgroundColor:colors.button,borderColor:colors.buttonBorder}} className="border p-2 px-4 rounded-full ">
+            <Text className="text-white">confirm</Text>
+          </TouchableOpacity>
+        </View>
+      }
+      
     </View>
   );
 };
