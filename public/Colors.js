@@ -8,5 +8,7 @@ export const colors ={
     secondary: "#0E9CFF",
     white:"#9EABCC",
     whiteDark:"#242934",
-    gray:"#292D41"
+    gray:"#292D41",
+    yes:"#2F84BF",
+    no:"#FD424E",
 }

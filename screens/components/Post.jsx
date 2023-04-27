@@ -1,9 +1,34 @@
-import { View, Text, TouchableOpacity, ImageComponent } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageComponent,
+  Image,
+} from "react-native";
+import React, { useState } from "react";
 import { colors } from "../../public/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const Post = () => {
+const Post = ({ post }) => {
+  const [optionSelected, setOptionSelected] = useState(0);
+  const [show, setshow] = useState(false);
+  const check = (option) => {
+    setOptionSelected(option);
+    setshow(true);
+  };
+  const optionLogic = (option) => {
+    if (show) {
+      if (option == post.correctAnswer[0]) {
+        return colors.yes;
+      } else if (option == optionSelected && option != post.correctAnswer[0]) {
+        return colors.no;
+      } else {
+        return colors.gray;
+      }
+    } else {
+      return colors.gray;
+    }
+  };
   return (
     <View
       style={{ backgroundColor: colors.background, borderColor: colors.border }}
@@ -11,13 +36,16 @@ const Post = () => {
     >
       <View className="flex-row justify-between items-start">
         <View className="flex-row gap-x-2">
-          <View className="w-10 h-10 bg-[#0006] rounded-full"></View>
+          <Image
+            className="w-12 h-12 rounded-full"
+            source={{ uri: post?.avatar }}
+          ></Image>
           <View>
-            <Text style={{ color: colors.white }}>user name</Text>
-            <Text className="text-yellow-200 text-xs">JavaScript</Text>
+            <Text style={{ color: colors.white }}>{post?.userName}</Text>
+            <Text className="text-yellow-200 text-xs">{post.cat}</Text>
             <View className="flex-row gap-x-1 items-center">
               <Text className="text-xs text-gray-600">
-                100 people
+                {post.player?.length} people
               </Text>
             </View>
           </View>
@@ -29,28 +57,31 @@ const Post = () => {
           }}
           className="flex-row border justify-center rounded-full p-2 items-center "
         >
-              <Text className="text-xs mr-1" style={{ color: colors.white }}>
-                15
-              </Text>
+          <Text className="text-xs mr-1" style={{ color: colors.white }}>
+            {post.likes?.length}
+          </Text>
           <Ionicons name="heart" size={12} color={colors.white} />
         </TouchableOpacity>
       </View>
-      <Text className="px-1 pt-4 " style={{color:colors.white}} >
-            what is the result of this code ? {"\n"} 
-            var a = “hello” ;{"\n"}
-            var b = a + “ world” ;{"\n"}
-            console.log(b){"\n"}
+      <Text className="px-1 py-4 " style={{ color: colors.white }}>
+        {post?.question}
       </Text>
       <View className="px-1">
-        <TouchableOpacity className="p-3 rounded-md mb-1" style={{backgroundColor:colors.gray,color:colors.white}}>
-            <Text style={{color:colors.white}}>option 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="p-3 rounded-md mb-1" style={{backgroundColor:colors.gray,color:colors.white}}>
-            <Text style={{color:colors.white}}>option 2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="p-3 rounded-md mb-1" style={{backgroundColor:colors.gray,color:colors.white}}>
-            <Text style={{color:colors.white}}>option 3</Text>
-        </TouchableOpacity>
+        {post.options.map((option, key) => {
+          return (
+            <TouchableOpacity
+              onPress={() => check(option)}
+              key={key}
+              className="p-3 rounded-md mb-1"
+              style={{
+                backgroundColor: optionLogic(option),
+                color: colors.white,
+              }}
+            >
+              <Text style={{ color: colors.white }}>{option}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );
