@@ -32,6 +32,9 @@ const Profile = ({navigation}) => {
                 <Text className="text-white text-4xl px-4  pt-1 ">{user?.win}</Text>
                 <Text className="text-white text-lg px-4  pt-1 ">{user?.play} plays</Text>
             </View>
+      <TouchableOpacity onPress={()=>navigation.navigate("NewPost")} style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
+        <Ionicons name="add" size={30} color={"#fff"} />
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

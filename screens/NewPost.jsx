@@ -14,6 +14,7 @@ import { addDoc } from "firebase/firestore";
 import { UserColRef, postColRef } from "../firebase";
 import { UserContext } from "../context/userContext";
 import { PostContext } from "../context/postsContext";
+import { CatsContext } from "../context/CatsContext";
 
 const NewPost = ({ navigation }) => {
   const [question, setQuestion] = useState("");
@@ -24,6 +25,12 @@ const NewPost = ({ navigation }) => {
   const [fakes,setFakes]=useState(2)
   const { user } = useContext(UserContext);
   const { setUpPosts } = useContext(PostContext);
+  const {cats }= useContext(CatsContext)
+  const [cat,setCat]=useState("javascript")
+
+
+
+
   const post = () => {
     let ans = [];
     if (fake1) {
@@ -37,7 +44,7 @@ const NewPost = ({ navigation }) => {
     }
     addDoc(postColRef, {
       avatar: user.avatar,
-      cat: "javascript",
+      cat: cat,
       correctAnswer: [answer],
       likes: [],
       options: [...ans,answer],
@@ -59,7 +66,24 @@ const NewPost = ({ navigation }) => {
       <Text style={{ color: colors.white }} className="pb-4 text-4xl pt-8 ">
         New post
       </Text>
+
       <ScrollView>
+
+    <View>
+    <Text style={{color:colors.white}} className="text-xl  py-2 ">Catagories</Text>
+    <ScrollView horizontal={true} className="h-fit">
+        {
+            cats.map((c,key)=>{
+                return(
+                    <TouchableOpacity onPress={()=>{setCat(c.name)}} key={key} style={{backgroundColor:cat==c.name?c.color:colors.background,borderColor:colors.button}} className="py-2 px-4 ml-2 rounded-full border">
+                        <Text style={{color:cat==c.name?"#000":c.color}}>{c.name}</Text>
+                    </TouchableOpacity>
+                )
+            })
+        }
+    </ScrollView>
+    </View>
+
         <Text style={{ color: colors.white }} className="py-2 text-sm ">
           the question
         </Text>

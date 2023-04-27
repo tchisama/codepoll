@@ -7,9 +7,8 @@ import { colors } from './public/Colors';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from './screens/Profile';
-import { PostsProvider } from './context/postsContext';
-import { UserProvider } from './context/userContext';
 import NewPost from './screens/NewPost';
+import Contextes from './context/Contextes';
 
 
 
@@ -17,8 +16,7 @@ const Stack = createNativeStackNavigator();
 const options={headerShown:false} 
 export default function App() {
   return (
-    <UserProvider>
-    <PostsProvider>
+    <Contextes>
     <NavigationContainer>
       <StatusBar backgroundColor={"dark" == 'Light' ? '#fff' : colors.backgroundDark} barStyle={"dark" == 'Light' ? 'dark-content' : 'light-content'}/>
       <Stack.Navigator initialRouteName="Home">
@@ -27,8 +25,7 @@ export default function App() {
         <Stack.Screen options={options} name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
-    </PostsProvider>
-    </UserProvider>
+    </Contextes>
   );
 }
 

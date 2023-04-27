@@ -16,3 +16,4 @@ export const db = getFirestore(app)
 
 export const postColRef = collection(db,"posts");
 export const UserColRef = collection(db,"users");
+export const CatsColRef = collection(db,"cats");
