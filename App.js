@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Home from './screens/Home';
+import { colors } from './public/Colors';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>hello in codepoll</Text>
-      <StatusBar style="auto" />
+      <Home/>
     </View>
   );
 }
@@ -13,7 +14,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundDark,
     alignItems: 'center',
     justifyContent: 'center',
   },
