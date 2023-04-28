@@ -7,6 +7,8 @@ import { LineChart } from 'react-native-chart-kit'
 import { ChartData } from 'react-native-chart-kit/dist/HelperTypes'
 import { Link } from '@react-navigation/native'
 import { Line } from 'react-native-svg'
+import Post from './components/Post'
+import { CatsContext } from '../context/CatsContext'
 
 
 
@@ -15,6 +17,12 @@ import { Line } from 'react-native-svg'
 
 const Profile = ({navigation}) => {
     const {user}= useContext(UserContext)
+    const {cats}= useContext(CatsContext)
+
+
+    const counts = {};
+    user.win.map(v=>v.slice(18)).forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+
 
   return (
     <SafeAreaView style={{backgroundColor:colors.backgroundDark}} className="flex-1 pt-10">
@@ -37,8 +45,8 @@ const Profile = ({navigation}) => {
             <Text style={{color:colors.white}} className="opacity-60 text-sm px-3 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem sunt id quae consequatur aspernatur ab veritatis cumque porro, omnis similique quasi cupiditate fuga debitis minus eius placeat accusantium consequuntur itaque? sama</Text>
         </View>
             <View style={{backgroundColor:colors.background,borderColor:colors.buttonBorder}} className="border m-4 rounded-xl justify-between items-center h-14 flex-row overflow-hidden relative">
-                <View style={{width:(((user?.win*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
-                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win}</Text>
+                <View style={{width:(((user?.win.length*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
+                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win.length}</Text>
                 <Text className="text-white text-lg px-4  pt-1 ">{user?.play} plays</Text>
             </View>
       <TouchableOpacity onPress={()=>navigation.navigate("NewPost")} style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
@@ -47,8 +55,21 @@ const Profile = ({navigation}) => {
 
 
 
+        <View className="p-3 ">
 
-    <Line/>
+            <Text style={{color:colors.white}} className="text-xl">Technologies</Text>
+            <View className="items-start py-4">
+
+            {
+                user?.win.map(v=>v.slice(18)).filter((v,i,a)=>a.indexOf(v) === i).map((w,key)=>{
+                    return(
+                        <Text key={key} style={{backgroundColor:cats.find(c=>c.name==w).color}} className="text-white my-1 rounded-full px-4 py-2 bg-blue-950">{w} : {counts[w]}</Text>
+                    )
+                    }
+                )
+            }
+            </View>
+        </View>
 
 
 

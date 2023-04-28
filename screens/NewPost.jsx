@@ -10,7 +10,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { colors } from "../public/Colors";
 import Ionicons from "../public/Ionicons";
-import { addDoc } from "firebase/firestore";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 import { UserColRef, postColRef } from "../firebase";
 import { UserContext } from "../context/userContext";
 import { PostContext } from "../context/postsContext";
@@ -53,6 +53,7 @@ const NewPost = ({ navigation }) => {
       question: question,
       userId: user.userId,
       userName: user.userName,
+      createdAt:serverTimestamp(),
     }).then(() => {
       navigation.goBack();
       setUpPosts((p) => p + 1);

@@ -9,9 +9,11 @@ import { PostContext } from "../context/postsContext";
 import { getDocs } from "firebase/firestore";
 import { postColRef } from "../firebase";
 import Catbar from "./components/Catbar";
+import { UserContext } from "../context/userContext";
 
 const Home = ({navigation}) => {
   const {posts ,setPosts,upPosts, setUpPosts} = useContext(PostContext)
+  const {user } = useContext(UserContext)
 
 
   return (
@@ -23,7 +25,8 @@ const Home = ({navigation}) => {
         {
           posts.map((post,key)=>{
             return(
-              <Post key={post.id} post={post} />
+                !user.donePosts.includes(post.postId) &&
+                <Post key={post.id} post={post} />
             )
           })
         }

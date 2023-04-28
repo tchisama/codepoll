@@ -52,11 +52,14 @@ const Post = ({ post }) => {
   const confirm = () => {
     setshow(true);
     let win = optionSelected == post.correctAnswer[0];
+
     const docRef = doc(db, "users", user.id);
     const updateDocfn = updateDoc(docRef, {
-      win: win ? user.win + 1 : user.win,
+      win: arrayUnion(Math.random()+post.cat),
       play: user.play + 1,
     });
+
+    
 
       const postRef = doc(db,"posts",post.id);
       updateDoc(postRef,{

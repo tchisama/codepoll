@@ -8,10 +8,10 @@ const NavbarHome = ({navigation}) => {
   return (
         <View className=" px-3 py-2 mt-10 w-full flex-row items-center justify-between">
             <View className={"flex-row gap-x-2 items-center justify-between"}>
-                <TouchableOpacity className="p-1 rounded-full justify-center items-center">
+                {/* <TouchableOpacity className="p-1 rounded-full justify-center items-center">
                     <Ionicons name="menu" size={30} color={colors.white} />
-                </TouchableOpacity>
-                <Text style={{color:colors.white}} className="text-xl">Home</Text>
+                </TouchableOpacity> */}
+                <Text style={{color:colors.white}} className="text-3xl pl-2">Home</Text>
             </View>
 
             <View className={"flex-row gap-x-1 items-center justify-between"}>
