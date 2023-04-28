@@ -46,7 +46,7 @@ const Profile = ({navigation}) => {
         </View>
             <View style={{backgroundColor:colors.background,borderColor:colors.buttonBorder}} className="border m-4 rounded-xl justify-between items-center h-14 flex-row overflow-hidden relative">
                 <View style={{width:(((user?.win?.length*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
-                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win?.length}</Text>
+                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win?.length||"0"} win</Text>
                 <Text className="text-white text-lg px-4  pt-1 ">{user?.play||"0"} plays</Text>
             </View>
       <TouchableOpacity onPress={()=>navigation.navigate("NewPost")} style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
@@ -63,7 +63,7 @@ const Profile = ({navigation}) => {
             {
                 user?.win?.map(v=>v.slice(18)).filter((v,i,a)=>a.indexOf(v) === i).map((w,key)=>{
                     return(
-                        <Text key={key} style={{backgroundColor:cats.find(c=>c.name==w).color}} className="text-white my-1 rounded-full px-4 py-2 bg-blue-950">{w} : {counts[w]}</Text>
+                        <Text key={key} style={{backgroundColor:cats.find(c=>c.name==w)?.color}} className="text-white my-1 rounded-full px-4 py-2 bg-blue-950">{w} : {counts[w]}</Text>
                     )
                     }
                 )

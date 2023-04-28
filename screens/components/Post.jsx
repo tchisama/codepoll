@@ -19,12 +19,28 @@ const Post = ({ post }) => {
   const { user } = useContext(UserContext);
   const { cats } = useContext(CatsContext);
   const [liked,setLiked]=useState(false)
+  const [newOptions,setNewOptions]=useState([])
 
   useEffect(()=>{
-    let isLiked = user?.likes?.findIndex(l=>l==post.id)==-1? false : true
-    setLiked(isLiked)
+    if (user.likes) {
+      let isLiked = user?.likes?.findIndex(l=>l==post.id)==-1? false : true
+      setLiked(isLiked)
+    }else{
+      setLiked(false)
+    }
   },[user])
 
+  useEffect(()=>{
+    let opts=[]
+    post.options.forEach((o)=>{
+      if (Math.random()>.5) {
+         opts.push(o) 
+      }else{
+        opts.unshift(o)
+      }
+    })
+    setNewOptions(opts)
+  },[])
 
   const handelLike=()=>{
     if (liked) {
@@ -55,8 +71,8 @@ const Post = ({ post }) => {
 
     const docRef = doc(db, "users", user.id);
     const updateDocfn = updateDoc(docRef, {
-      win: arrayUnion(Math.random()+post.cat),
-      play: user.play + 1,
+      win: arrayUnion(Math.floor(Math.random()*(1000000000000000000-2))+post.cat),
+      play: (user.play||0) + 1,
     });
 
     
@@ -147,7 +163,7 @@ const Post = ({ post }) => {
         {post?.question}
       </Text>
       <View className="px-1">
-        {post.options.map((option, key) => {
+        {newOptions.map((option, key) => {
           return (
             <TouchableOpacity
               onPress={() => check(option)}

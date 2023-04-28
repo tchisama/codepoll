@@ -20,12 +20,10 @@ export const UserProvider= ({children})=>{
     }
     
   useEffect(()=>{
-    alert(auth?.userId)
-    if (auth?.userId) {
-      const q = query (UserColRef,where("userId","==",(auth?.userId).toString()))
+    if (auth?.uid) {
+      const q = query (UserColRef,where("userId","==",(auth?.uid).toString()))
       onSnapshot(q,(snapshot)=>{
           setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
-          alert((snapshot.docs[0].data()).userName)
       })
     }
   },[auth])

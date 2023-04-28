@@ -1,10 +1,12 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { SafeAreaView } from 'react-native'
 import { colors } from '../../public/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { UserContext } from '../../context/userContext';
 
 const NavbarHome = ({navigation}) => {
+     const {user}= useContext(UserContext)
   return (
         <View className=" px-3 py-2 mt-10 w-full flex-row items-center justify-between">
             <View className={"flex-row gap-x-2 items-center justify-between"}>
@@ -19,8 +21,8 @@ const NavbarHome = ({navigation}) => {
                     <Ionicons name="notifications" size={20} color={colors.white} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{borderColor:colors.whiteDark,backgroundColor:colors.background}} className={"p-1  border rounded-full  flex-row items-center shadow-md justify-between gap-x-2"}>
-                    <Text style={{color:colors.white}} >Tchi</Text>
-                    <Image  className=" w-8 h-8  rounded-full  " source={{uri:"https://scontent.frak1-2.fna.fbcdn.net/v/t39.30808-6/272903096_1179661402805532_104898404720613763_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEs_5DFN-2Cy9Vo3E5e1l5LwQJqJyaWMXzBAmonJpYxfDnXv4-k5p3D4CIPKQmvBQsI-M64HVPlsq_PgvkCoMDW&_nc_ohc=CMI1GSpuWosAX-D0Aa6&_nc_ht=scontent.frak1-2.fna&oh=00_AfD7TJ2290NeeoF7jaeL1CYPB0SlCN_2OFzlFQbtyHuUzQ&oe=64500925"}}></Image>
+                    <Text style={{color:colors.white}} >{user?.userName}</Text>
+                    <Image  className=" w-8 h-8  rounded-full  " style={{backgroundColor:colors.background}} source={{uri:user.avatar||""}}></Image>
                 </TouchableOpacity>
             </View>
         </View>

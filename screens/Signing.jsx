@@ -8,7 +8,7 @@ import {
 import React, { useContext, useState } from "react";
 import { colors } from "../public/Colors";
 import { UserContext } from "../context/userContext";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth as Auth, UserColRef } from "../firebase";
 
 
@@ -31,15 +31,21 @@ const Signing = ({ navigation }) => {
       createUserWithEmailAndPassword(Auth, email, password).then((cred) => {
         addDoc(UserColRef, {
             avatar: '',
-            userId: id,
+            userId: cred.user.uid,
             userName: name,
             createdAt: id,
             donePosts:["default"]
         }).then(() => {
+            setAuth({ ...cred.user, displayName: name });
             navigation.navigate("Home");
-            setAuth({ ...cred.user, displayName: name,userId:id });
         });
       });
+    }else{
+        signInWithEmailAndPassword(Auth,email,password).then((res)=>{
+            setAuth(res.user)
+        }).then(()=>{
+            navigation.navigate("Home");
+        })
     }
   };
 
