@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView } from 'react-native'
+import React, { useState } from 'react'
 
 const Signing = () => {
+    const [singup,setSignup]=useState(true)
+
   return (
-    <View>
-      <Text>Signing</Text>
-      
-    </View>
+    <SafeAreaView>
+      <Text>Sign Up</Text>
+    </SafeAreaView>
   )
 }
 
