@@ -9,6 +9,9 @@ import { Link } from '@react-navigation/native'
 import { Line } from 'react-native-svg'
 import Post from './components/Post'
 import { CatsContext } from '../context/CatsContext'
+import { signOut } from 'firebase/auth'
+import { auth } from '../firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -16,13 +19,20 @@ import { CatsContext } from '../context/CatsContext'
 
 
 const Profile = ({navigation}) => {
-    const {user}= useContext(UserContext)
+    const {user,setAuth}= useContext(UserContext)
     const {cats}= useContext(CatsContext)
 
 
     const counts = {};
-    user.win.map(v=>v.slice(18)).forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+    user?.win?.map(v=>v.slice(18)).forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
 
+    const logout = ()=>{
+        signOut(auth).then(()=>{
+            setAuth(null)
+            AsyncStorage.removeItem("auth")
+            navigation.navigate("Home")
+        })
+    }
 
   return (
     <SafeAreaView style={{backgroundColor:colors.backgroundDark}} className="flex-1 pt-10">
@@ -30,24 +40,24 @@ const Profile = ({navigation}) => {
             <TouchableOpacity onPress={()=>{navigation.goBack()}} className="p-2 rounded-full">
                 <Ionicons name="arrow-back-outline" size={24} color={colors.white} />
             </TouchableOpacity>
-            <TouchableOpacity className="p-2 rounded-full">
-                <Ionicons name="ellipsis-vertical" size={24} color={colors.white} />
+            <TouchableOpacity onPress={logout} className="p-2 rounded-full">
+                <Ionicons name="log-out-outline" size={24} color={colors.white} />
             </TouchableOpacity>
         </View>
         <View className="flex-col items-center gap-y-2">
             <View className="relative">
-                <Image  className=" w-28 h-28  rounded-full  " source={{uri:"https://scontent.frak1-2.fna.fbcdn.net/v/t39.30808-6/272903096_1179661402805532_104898404720613763_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEs_5DFN-2Cy9Vo3E5e1l5LwQJqJyaWMXzBAmonJpYxfDnXv4-k5p3D4CIPKQmvBQsI-M64HVPlsq_PgvkCoMDW&_nc_ohc=CMI1GSpuWosAX-D0Aa6&_nc_ht=scontent.frak1-2.fna&oh=00_AfD7TJ2290NeeoF7jaeL1CYPB0SlCN_2OFzlFQbtyHuUzQ&oe=64500925"}}></Image>
+                <Image  className=" w-28 h-28  rounded-full  " style={{backgroundColor:colors.background}} source={{uri:user.avatar||" "}}></Image>
                 <TouchableOpacity style={{backgroundColor:colors.primary}} className="p-2 rounded-full absolute bottom-0 right-0 ">
                     <Ionicons name="camera" size={20} color={colors.white} />
                 </TouchableOpacity>
             </View>
-            <Text style={{color:colors.white}} className="text-lg">tchi sama</Text>
-            <Text style={{color:colors.white}} className="opacity-60 text-sm px-3 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem sunt id quae consequatur aspernatur ab veritatis cumque porro, omnis similique quasi cupiditate fuga debitis minus eius placeat accusantium consequuntur itaque? sama</Text>
+            <Text style={{color:colors.white}} className="text-lg">{user.userName}</Text>
+            <Text style={{color:colors.white}} className="opacity-60 text-sm px-3 text-center">{user?.info||"hey i'm using codepoll"}</Text>
         </View>
             <View style={{backgroundColor:colors.background,borderColor:colors.buttonBorder}} className="border m-4 rounded-xl justify-between items-center h-14 flex-row overflow-hidden relative">
-                <View style={{width:(((user?.win.length*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
-                <Text className="text-white text-4xl px-4  pt-1 ">{user?.win.length}</Text>
-                <Text className="text-white text-lg px-4  pt-1 ">{user?.play} plays</Text>
+                <View style={{width:(((user?.win?.length*100)/user?.play)+"%"),backgroundColor:colors.primary}} className={"absolute bg-blue-950 h-14 left-0 top-0"}></View>
+                <Text className="text-white text-2xl px-4  pt-1 ">{user?.win?.length||"0"} win</Text>
+                <Text className="text-white text-lg px-4  pt-1 ">{user?.play||"0"} plays</Text>
             </View>
       <TouchableOpacity onPress={()=>navigation.navigate("NewPost")} style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
         <Ionicons name="add" size={30} color={"#fff"} />
@@ -61,9 +71,9 @@ const Profile = ({navigation}) => {
             <View className="items-start py-4">
 
             {
-                user?.win.map(v=>v.slice(18)).filter((v,i,a)=>a.indexOf(v) === i).map((w,key)=>{
+                user?.win?.map(v=>v.slice(18)).filter((v,i,a)=>a.indexOf(v) === i).map((w,key)=>{
                     return(
-                        <Text key={key} style={{backgroundColor:cats.find(c=>c.name==w).color}} className="text-white my-1 rounded-full px-4 py-2 bg-blue-950">{w} : {counts[w]}</Text>
+                        <Text key={key} style={{backgroundColor:cats.find(c=>c.name==w)?.color}} className="text-white my-1 rounded-full px-4 py-2 bg-blue-950">{w} : {counts[w]}</Text>
                     )
                     }
                 )

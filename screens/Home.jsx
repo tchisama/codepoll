@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { SafeAreaView } from "react-native";
 import { colors } from "../public/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -10,11 +10,29 @@ import { getDocs } from "firebase/firestore";
 import { postColRef } from "../firebase";
 import Catbar from "./components/Catbar";
 import { UserContext } from "../context/userContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = ({navigation}) => {
   const {posts ,setPosts,upPosts, setUpPosts} = useContext(PostContext)
-  const {user } = useContext(UserContext)
+  const {user,auth,setAuth } = useContext(UserContext)
 
+
+  useEffect(()=>{
+    if(!auth){
+        navigation.navigate("Signing")
+    }
+  },[auth])
+
+
+  useMemo(()=>{
+    AsyncStorage.getItem("auth").then((val)=>{
+      setAuth(JSON.parse(val))
+      alert(val)
+      if (!JSON.parse(val)) {
+        navigation.navigate("Signing")
+      }
+    })
+  },[])
 
   return (
     <SafeAreaView style={{backgroundColor:colors.backgroundDark}} className={`flex-1 w-full `}>

@@ -6,20 +6,27 @@ import { UserColRef } from "../firebase";
 export const UserContext = createContext(null)
 
 export const UserProvider= ({children})=>{
-    const [user,setUser]=useState({})
-    const [updateUser,setUpdateUser]=useState(0)
+    const [user,setUser]=useState({});
+    const [updateUser,setUpdateUser]=useState(0);
+    const [auth,setAuth]=useState(null);
+    
     const value ={
         user,
         setUser,
         updateUser,
-        setUpdateUser
+        setUpdateUser,
+        auth,
+        setAuth
     }
+    
   useEffect(()=>{
-    const q = query (UserColRef,where("userId","==","0"))
-    onSnapshot(q,(snapshot)=>{
-        setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
-    })
-  },[])
+    if (auth?.uid) {
+      const q = query (UserColRef,where("userId","==",(auth?.uid).toString()))
+      onSnapshot(q,(snapshot)=>{
+          setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
+      })
+    }
+  },[auth])
 
     return (
         <UserContext.Provider value={{...value}}>
