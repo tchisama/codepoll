@@ -1,8 +1,17 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, Image,Dimensions  } from 'react-native'
 import React, { useCallback, useContext } from 'react'
 import { colors } from '../public/Colors'
 import Ionicons from '../public/Ionicons'
 import { UserContext } from '../context/userContext'
+import { LineChart } from 'react-native-chart-kit'
+import { ChartData } from 'react-native-chart-kit/dist/HelperTypes'
+import { Link } from '@react-navigation/native'
+import { Line } from 'react-native-svg'
+
+
+
+
+
 
 const Profile = ({navigation}) => {
     const {user}= useContext(UserContext)
@@ -35,6 +44,16 @@ const Profile = ({navigation}) => {
       <TouchableOpacity onPress={()=>navigation.navigate("NewPost")} style={{backgroundColor:colors.primary}} className="absolute rounded-xl bottom-8 right-8 z-50 w-14 h-14 justify-center items-center">
         <Ionicons name="add" size={30} color={"#fff"} />
       </TouchableOpacity>
+
+
+
+
+    <Line/>
+
+
+
+
+
     </SafeAreaView>
   )
 }

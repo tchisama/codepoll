@@ -23,7 +23,7 @@ const Home = ({navigation}) => {
         {
           posts.map((post,key)=>{
             return(
-              <Post key={key} post={post} />
+              <Post key={post.id} post={post} />
             )
           })
         }

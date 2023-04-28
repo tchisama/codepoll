@@ -6,11 +6,11 @@ import { CatsProvider } from "./CatsContext";
 
 const Contextes = ({ children }) => {
   return (
-    <CatsProvider>
-      <PostsProvider>
-        <UserProvider>{children}</UserProvider>
-      </PostsProvider>
-    </CatsProvider>
+   <UserProvider>
+     <CatsProvider>
+       <PostsProvider>{children}</PostsProvider>
+     </CatsProvider>
+   </UserProvider>
   );
 };
 
