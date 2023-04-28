@@ -6,8 +6,10 @@ import { UserColRef } from "../firebase";
 export const UserContext = createContext(null)
 
 export const UserProvider= ({children})=>{
-    const [user,setUser]=useState({})
-    const [updateUser,setUpdateUser]=useState(0)
+    const [user,setUser]=useState({});
+    const [updateUser,setUpdateUser]=useState(0);
+    const [auth,setAuth]=useState({});
+    
     const value ={
         user,
         setUser,
