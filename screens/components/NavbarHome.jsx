@@ -22,7 +22,7 @@ const NavbarHome = ({navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{borderColor:colors.whiteDark,backgroundColor:colors.background}} className={"p-1  border rounded-full  flex-row items-center shadow-md justify-between gap-x-2"}>
                     <Text style={{color:colors.white}} >{user?.userName}</Text>
-                    <Image  className=" w-8 h-8  rounded-full  " style={{backgroundColor:colors.background}} source={{uri:user.avatar||""}}></Image>
+                    <Image  className=" w-8 h-8  rounded-full  " style={{backgroundColor:colors.primary}} source={{uri:user.avatar||" "}}></Image>
                 </TouchableOpacity>
             </View>
         </View>

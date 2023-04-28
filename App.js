@@ -20,9 +20,9 @@ export default function App() {
     <Contextes>
     <NavigationContainer>
       <StatusBar backgroundColor={"dark" == 'Light' ? '#fff' : colors.backgroundDark} barStyle={"dark" == 'Light' ? 'dark-content' : 'light-content'}/>
-      <Stack.Navigator initialRouteName="Signing">
-        <Stack.Screen options={options} name="Signing" component={Signing} />
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen options={options} name="Home" component={Home} />
+        <Stack.Screen options={options} name="Signing" component={Signing} />
         <Stack.Screen options={options} name="NewPost" component={NewPost} />
         <Stack.Screen options={options} name="Profile" component={Profile} />
       </Stack.Navigator>

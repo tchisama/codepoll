@@ -15,10 +15,11 @@ import { auth as Auth, UserColRef } from "../firebase";
 
 import { v4 as uuidv4 } from 'uuid';
 import { addDoc } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Signing = ({ navigation }) => {
-  const [singup, setSignup] = useState(true);
+  const [singup, setSignup] = useState(false);
 
   const { auth, setAuth } = useContext(UserContext);
   const [name, setName] = useState("");
@@ -37,12 +38,14 @@ const Signing = ({ navigation }) => {
             donePosts:["default"]
         }).then(() => {
             setAuth({ ...cred.user, displayName: name });
+            AsyncStorage.setItem("auth",JSON.stringify(cred.user))
             navigation.navigate("Home");
         });
       });
     }else{
         signInWithEmailAndPassword(Auth,email,password).then((res)=>{
             setAuth(res.user)
+            AsyncStorage.setItem("auth",JSON.stringify(res.user))
         }).then(()=>{
             navigation.navigate("Home");
         })
@@ -84,6 +87,7 @@ const Signing = ({ navigation }) => {
             Email
           </Text>
           <TextInput
+          keyboardType="email-address"
             style={{
               backgroundColor: colors.backgroundDark,
               borderColor: colors.button,
@@ -99,6 +103,7 @@ const Signing = ({ navigation }) => {
           </Text>
           <TextInput
             value={password}
+            secureTextEntry={true} 
             onChangeText={setPassword}
             style={{
               backgroundColor: colors.backgroundDark,

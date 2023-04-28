@@ -71,7 +71,7 @@ const Post = ({ post }) => {
 
     const docRef = doc(db, "users", user.id);
     const updateDocfn = updateDoc(docRef, {
-      win: arrayUnion(Math.floor(Math.random()*(1000000000000000000-2))+post.cat),
+      win: arrayUnion(post.postId+"#####"+post.cat),
       play: (user.play||0) + 1,
     });
 
