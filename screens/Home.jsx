@@ -13,7 +13,10 @@ import { UserContext } from "../context/userContext";
 
 const Home = ({navigation}) => {
   const {posts ,setPosts,upPosts, setUpPosts} = useContext(PostContext)
-  const {user } = useContext(UserContext)
+  const {user,auth } = useContext(UserContext)
+  useEffect(()=>{
+    console.log(auth)
+  },[auth])
 
 
   return (

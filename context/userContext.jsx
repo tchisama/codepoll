@@ -14,14 +14,21 @@ export const UserProvider= ({children})=>{
         user,
         setUser,
         updateUser,
-        setUpdateUser
+        setUpdateUser,
+        auth,
+        setAuth
     }
+    
   useEffect(()=>{
-    const q = query (UserColRef,where("userId","==","0"))
-    onSnapshot(q,(snapshot)=>{
-        setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
-    })
-  },[])
+    alert(auth?.userId)
+    if (auth?.userId) {
+      const q = query (UserColRef,where("userId","==",(auth?.userId).toString()))
+      onSnapshot(q,(snapshot)=>{
+          setUser({...snapshot.docs[0].data(),id:snapshot.docs[0].id})
+          alert((snapshot.docs[0].data()).userName)
+      })
+    }
+  },[auth])
 
     return (
         <UserContext.Provider value={{...value}}>
