@@ -37,7 +37,6 @@ const Home = ({navigation}) => {
         {
           posts.map((post,key)=>{
             return(
-                !user.donePosts.includes(post.postId) &&
                 <Post key={post.id} post={post} />
             )
           })
@@ -47,4 +46,5 @@ const Home = ({navigation}) => {
   );
 };
 
+// !user.donePosts.includes(post.postId) &&
 export default Home;

@@ -24,8 +24,9 @@ export const PostsProvider= ({children})=>{
 
   useEffect(()=>{
     if (user?.donePosts?.length>0) {
+// and( where("postId" , "not-in" , [...user.donePosts]) 
       var q;
-        q = query(postColRef, and( where("postId" , "not-in" , [...user.donePosts]) , where("cat","==",currentCat) ),orderBy("postId"))
+        q = query(postColRef,  where("cat","==",currentCat) ,orderBy("postId"))
 
       onSnapshot(q,(snapshot)=>{
         let newPosts = [];

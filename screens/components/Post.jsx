@@ -121,8 +121,9 @@ const Post = ({ post }) => {
       <View className="flex-row justify-between items-start">
         <View className="flex-row gap-x-2">
           <Image
+            style={{backgroundColor:colors.primary}}
             className="w-12 h-12 rounded-full"
-            source={{ uri: post?.avatar }}
+            source={{ uri: post?.avatar || " "}}
           ></Image>
           <View className="items-start">
             <Text style={{ color: colors.white }}>{post?.userName}</Text>
