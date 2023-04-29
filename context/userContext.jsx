@@ -20,6 +20,7 @@ export const UserProvider= ({children})=>{
     }
     
   useEffect(()=>{
+    setUser({})
     if (auth?.uid) {
       const q = query (UserColRef,where("userId","==",(auth?.uid).toString()))
       onSnapshot(q,(snapshot)=>{

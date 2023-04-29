@@ -17,21 +17,15 @@ const Home = ({navigation}) => {
   const {user,auth,setAuth } = useContext(UserContext)
 
 
-  useEffect(()=>{
-    if(!auth){
-        navigation.navigate("Signing")
-    }
-  },[auth])
-
 
   useMemo(()=>{
     AsyncStorage.getItem("auth").then((val)=>{
       setAuth(JSON.parse(val))
-      alert(val)
-      if (!JSON.parse(val)) {
+      if (!val) {
         navigation.navigate("Signing")
       }
     })
+    
   },[])
 
   return (

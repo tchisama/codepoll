@@ -44,8 +44,8 @@ const Signing = ({ navigation }) => {
       });
     }else{
         signInWithEmailAndPassword(Auth,email,password).then((res)=>{
-            setAuth(res.user)
             AsyncStorage.setItem("auth",JSON.stringify(res.user))
+            setAuth(res.user)
         }).then(()=>{
             navigation.navigate("Home");
         })

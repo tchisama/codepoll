@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Image,Dimensions  } from 'react-native'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback,useEffect, useContext } from 'react'
 import { colors } from '../public/Colors'
 import Ionicons from '../public/Ionicons'
 import { UserContext } from '../context/userContext'
@@ -10,27 +10,42 @@ import { Line } from 'react-native-svg'
 import Post from './components/Post'
 import { CatsContext } from '../context/CatsContext'
 import { signOut } from 'firebase/auth'
-import { auth } from '../firebase'
+import { auth as Auth } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
 
-
-
 const Profile = ({navigation}) => {
-    const {user,setAuth}= useContext(UserContext)
+    const {user,setAuth,auth}= useContext(UserContext)
     const {cats}= useContext(CatsContext)
+
+
+
+
+
+    useEffect(() => {
+        if(auth==null||auth==""){
+            navigation.navigate("Signing")
+        }
+    }, [])
+    
+
+
+
+
+
+
 
 
     const counts = {};
     user?.win?.map(v=>v.slice(18)).forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
 
     const logout = ()=>{
-        signOut(auth).then(()=>{
+        signOut(Auth).then(()=>{
             setAuth(null)
-            AsyncStorage.removeItem("auth")
-            navigation.navigate("Home")
+            AsyncStorage.setItem("auth","")
+            navigation.navigate("Signing")
         })
     }
 
@@ -47,7 +62,7 @@ const Profile = ({navigation}) => {
         <View className="flex-col items-center gap-y-2">
             <View className="relative">
                 <Image  className=" w-28 h-28  rounded-full  " style={{backgroundColor:colors.background}} source={{uri:user.avatar||" "}}></Image>
-                <TouchableOpacity style={{backgroundColor:colors.primary}} className="p-2 rounded-full absolute bottom-0 right-0 ">
+                <TouchableOpacity  style={{backgroundColor:colors.primary}} className="p-2 rounded-full absolute bottom-0 right-0 ">
                     <Ionicons name="camera" size={20} color={colors.white} />
                 </TouchableOpacity>
             </View>
